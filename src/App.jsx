@@ -8,8 +8,8 @@ const symbolList = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
 function App() {
 
   const [password, setPassword] = useState('P4$5W0rD!!@');
-  const [upperCase, setUpperCase] = useState(false);
-  const [lowerCase, setLowerCase] = useState( false);
+  const [upperCaseCheck, setUpperCaseCheck] = useState(false);
+  const [lowerCaseCheck, setLowerCaseCheck] = useState( false);
   const [numberCheck, setNumberCheck] = useState(false);
   const [symbolCheck, setSymbolCheck] = useState(false);
   const [passwordLength, setPasswordLength] = useState(8);
@@ -18,10 +18,10 @@ function App() {
 
         let characterList = '';
 
-        if(upperCase){
+        if(upperCaseCheck){
           characterList += upperCaseLetters
         }
-        if(lowerCase){
+        if(lowerCaseCheck){
           characterList += lowerCaseLetters
         }
         if(numberCheck){
@@ -40,6 +40,32 @@ function App() {
         }
 
         setPassword(keepPassword)
+
+      let trueCount = 0;
+      if (upperCaseCheck) trueCount++;
+      if (lowerCaseCheck) trueCount++;
+      if (numberCheck) trueCount++;
+      if (symbolCheck) trueCount++;
+
+      const passwordStrength = document.getElementById('passwordStrength');
+
+      if (trueCount === 1 ) {
+          passwordStrength.innerHTML = '<span class="flex items-center text-maindark">EASY</span>';
+          passwordStrength.style.backgroundColor = '#BEF992';
+      } else if (trueCount === 2 ) {
+          passwordStrength.innerHTML = '<span class="flex items-center text-maindark">MEDIUM</span>';
+          passwordStrength.style.backgroundColor = '#FFD717';
+      } else if (trueCount === 3 ) {
+          passwordStrength.innerHTML = '<span class="flex items-center text-mainlight">HARD</span>';
+          passwordStrength.style.backgroundColor = '#F97300';
+      } else if (trueCount === 4 ) {
+          passwordStrength.innerHTML = '<span class="flex items-center text-mainlight">Strongest</span>';
+          passwordStrength.style.backgroundColor = '#BE3144';
+      } else {
+          passwordStrength.innerHTML = '<span class="flex items-center"></span>';
+          passwordStrength.style.backgroundColor = '';
+      }
+
   }
 
   const copyPassword = () =>{
@@ -50,7 +76,7 @@ function App() {
     <>
     <div className="screen-container">
       <div className="h-full w-full">
-        <div className="mx-auto flex h-screen w-[1220px] max-w-full flex-col px-md py-[15svh]">
+        <div className="mx-auto flex h-screen w-[1220px] max-w-full flex-col justify-center">
           <div className="mx-auto flex w-full max-w-[420px] flex-col">
             <div className="flex justify-center p-6">
               <h1 className="text-mainlight text-3xl font-thin">
@@ -103,8 +129,8 @@ function App() {
                   <div className="flex flex-row space-x-4 items-center">
                     <input
                       type="checkbox"
-                      checked={upperCase}
-                      onChange={() => setUpperCase(!upperCase)}
+                      checked={upperCaseCheck}
+                      onChange={() => setUpperCaseCheck(!upperCaseCheck)}
                       className="h-5 w-5 bg-subdark border-sublight border-solid border-box border-[3px]"
                     />
                     <p className="text-mainlight text-xl font-thin">
@@ -114,8 +140,8 @@ function App() {
                   <div className="flex flex-row space-x-4 items-center">
                     <input
                       type="checkbox"
-                      checked={lowerCase}
-                      onChange={() => setLowerCase(!lowerCase)}
+                      checked={lowerCaseCheck}
+                      onChange={() => setLowerCaseCheck(!lowerCaseCheck)}
                       className="h-5 w-5 bg-subdark border-sublight border-solid border-box border-[3px]"
                     />
                     <p className="text-mainlight text-xl font-thin">
@@ -151,17 +177,11 @@ function App() {
                       <h2 className="p-3 text-xl text-grey">STRENGTH</h2>
                       <div className="flex space-x-2 p-3">
                         <div
-                          className="h-8 w-[10px] bg-maindark border-sublight border-solid border-box border-2"
-                        />
-                        <div
-                          className="h-8 w-[10px] bg-maindark border-sublight border-solid border-box border-2"
-                        />
-                        <div
-                          className="h-8 w-[10px] bg-maindark border-sublight border-solid border-box border-2"
-                        />
-                        <div
-                          className="h-8 w-[10px] bg-maindark border-sublight border-solid border-box border-2"
-                        />
+                          id="passwordStrength"
+                          className="flex justify-center h-8 w-[100px] bg-maindark border-sublight border-solid border-box border-2"
+                        >
+                          <span className="flex items-center"></span>
+                        </div>
                       </div>
                     </div>
                   </div>
