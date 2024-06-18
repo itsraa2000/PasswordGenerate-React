@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify';
 
 const upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
@@ -43,21 +42,8 @@ function App() {
         setPassword(keepPassword)
   }
 
-  const copyPassword = async () =>{
-        const copiedResult = await navigator.clipboard.readText();
-        if(password.length && copiedResult !== password){
-          navigator.clipboard.writeText(password);
-          toast.success('Copied your Password !!', {
-                position:"top-center",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: false,
-                progress: undefined,
-                theme: "colored",
-                });
-        }
+  const copyPassword = () =>{
+        navigator.clipboard.writeText(password);
   }
 
   return (
@@ -106,7 +92,7 @@ function App() {
                       id="passwordLength"
                       type="range"
                       min="8"
-                      max="36"
+                      max="20"
                       onChange={(event) => setPasswordLength(event.currentTarget.value)}
                       defaultValue={passwordLength}
                       className="w-full h-2 bg-maindark rounded-lg appearance-none cursor-pointer glow-1 accent-mainlight"
@@ -195,7 +181,6 @@ function App() {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   </>
   )
